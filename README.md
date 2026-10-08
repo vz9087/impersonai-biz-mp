@@ -90,11 +90,9 @@ ImpersonAI combines:
 
 ### 3. Low Risk Detection — Legitimate Domain
 
-> *Legitimate domains like `google.com` and `paypal.com` are correctly classified as LOW RISK.*
+> *Legitimate domains like `google.com` and `github.com` are correctly classified as LOW RISK. Here, https and http also work very well.*
 
 ![Low Risk Detection](docs/screenshots/low-risk.png)
-
-**PASTE IMAGE HERE:** Use the screenshot showing `https://google.com` or `https://paypal.com` with the green LOW RISK card.
 
 ---
 
@@ -103,8 +101,6 @@ ImpersonAI combines:
 > *Click the extension icon in the toolbar to manually check the current page.*
 
 ![Extension Popup](docs/screenshots/extension-popup.png)
-
-**PASTE IMAGE HERE:** Use the screenshot showing the extension popup with "ImpersonAI / Click to check the current page for impersonation. / Check This Page / LOW RISK Probability: 1.2%".
 
 ---
 
@@ -123,8 +119,6 @@ ImpersonAI combines:
 > *The extension loaded in Developer Mode on `chrome://extensions`.*
 
 ![Extensions Page](docs/screenshots/extensions-page.png)
-
-**PASTE IMAGE HERE:** Use the screenshot showing `chrome://extensions` with "ImpersonAI Defender" listed and enabled.
 
 ---
 
