@@ -1,0 +1,15 @@
+google.com
+paypal.com
+amazon.com
+microsoft.com
+apple.com
+facebook.com
+netflix.com
+bankofamerica.com
+wellsfargo.com
+chase.com
+instagram.com
+linkedin.com
+twitter.com
+github.com
+dropbox.com

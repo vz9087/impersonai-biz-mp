@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>ImpersonAI - Domain Abuse Detection</title>
+    <style>
+        * {
+            margin: 0; padding: 0;
+            box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            width: 90%;
+            max-width: 800px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #00d4ff, #7b2ff7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #8892b0;
+            margin-bottom: 30px;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        input {
+            flex: 1;
+            padding: 15px 20px;
+            border: 2px solid #233554;
+            border-radius: 10px;
+            background: #0a192f;
+            color: #fff;
+            font-size: 16px;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #00d4ff;
+        }
+
+        button {
+            padding: 15px 30px;
+            background: linear-gradient(90deg, #00d4ff, #7b2ff7);
+            border: none;
+            border-radius: 10px;
+            color: #fff;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        button:hover { transform: scale (1.05); }
+
+        .result { display: none; 
+	    padding: 25px;
+            border-radius: 15px;
+            margin-top: 20px; }
+        .result.show { display: block; }
+
+        .risk-HIGH {
+            background: rgba(255, 0, 0, 0.2);
+            border: 2px solid #ff4444; }
+        .risk-MEDIUM {
+            background: rgba(255, 165, 0, 0.2);
+            border: 2px solid #ffaa00; }
+        .risk-LOW {
+            background: rgba(0, 255, 0, 0.2);
+            border: 2px solid #00ff88; }
+
+        .risk-badge {
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 18px;   margin-bottom: 15px; }
+
+        .risk-HIGH .risk-badge { background: #ff4444; }
+        .risk-MEDIUM .risk-badge { background: #ffaa00; }
+        .risk-LOW .risk-badge { background: #00ff88; color: #000; }
+
+        .detail {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;  margin-top: 20px; }
+
+        .detail-item {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 12px;
+            border-radius: 8px; }
+
+        .detail-item label { display: block;
+            color: #8892b0;
+            font-size: 12px;
+            margin-bottom: 5px; }
+
+        .detail-item value {
+            font-size: 16px; font-weight: bold; }
+
+        .loading {
+            text-align: center;  display: none;
+            color: #00d4ff;  }
+        .loading.show { display: block; }
+
+        .examples {
+            margin-top: 20px;
+            text-align: center;
+            color: #8892b0;
+            font-size: 14px; }
+
+        .examples span {
+            display: inline-block;
+            background: #233554;
+            padding: 5px 12px;
+            border-radius: 15px;
+            margin: 3px;  cursor: pointer; }
+
+        .examples span:hover { background: #00d4ff; color: #000; }
+
+</style></head>
+
+<body>
+    <div class="container">
+        <h1>ImpersonAI</h1>
+        <p class="subtitle">AI-Powered Domain Abuse & Impersonation Defense System</p>
+
+        <div class="input-group">
+            <input type="text" id="urlInput" placeholder="Enter domain (e.g., paypa1.com)" value="paypa1.com">
+            <button onclick="scanUrl()">Scan</button>
+        </div>
+
+        <div class="examples">
+            Try:
+            <span onclick="setUrl ('google.com')">google.com</span>
+            <span onclick="setUrl ('g00gle.com')">g00gle.com</span>
+            <span onclick="setUrl ('paypa1.com')">paypa1.com</span>
+            <span onclick="setUrl ('amaz0n-secure.com')">amaz0n-secure.com</span>
+        </div>
+
+        <div class="loading" id="loading">Analyzing domain...</div>
+
+        <div class="result" id="result">
+            <div class="risk-badge" id="riskBadge"></div>
+            <div id="details" class="detail"></div></div></div>
+
+    <script>
+        function setUrl(url) { document.getElementById('urlInput').value = url; }
+
+        async function scanUrl() {
+            const url = document.getElementById('urlInput').value.trim();
+            if (!url) return;
+
+            document.getElementById('loading').classList.add('show');
+            document.getElementById('result').classList.remove('show');
+
+            try {
+                const response = await fetch('http://127.0.0.1:8000/scan', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ url: url })
+                });
+
+                const data = await response.json();
+
+                document.getElementById('loading').classList.remove('show');
+
+                const resultDiv = document.getElementById('result');
+                resultDiv.className = 'result show risk-' + data.risk_level;
+
+                document.getElementById('riskBadge').textContent =
+                    data.risk_level + ' RISK (' + (data.probability * 100).toFixed(1) + '%)';
+
+                let detailsHtml = '';
+
+                if (data.closest_brand) {
+                    detailsHtml += `<div class="detail-item"><label>Similar To Brand</label><value>${data.closest_brand}</value></div>`;
+                    detailsHtml += `<div class="detail-item"><label>Edit Distance</label><value>${data.levenshtein_distance}</value></div>`;
+                }
+
+                detailsHtml += `<div class="detail-item"><label>URL Length</label><value>${data.features.url_length}</value></div>`;
+                detailsHtml += `<div class="detail-item"><label>Has HTTPS</label><value>${data.features.has_https ? 'Yes' : 'No'}</value></div>`;
+                detailsHtml += `<div class="detail-item"><label>Digit Count</label><value>${data.features.count_digits}</value></div>`;
+                detailsHtml += `<div class="detail-item"><label>Processing Time</label><value>${data.processing_time_ms} ms</value></div>`;
+
+                document.getElementById('details').innerHTML = detailsHtml;
+
+            } catch (error) {
+                document.getElementById('loading').classList.remove('show');
+                alert('Error: ' + error.message); }}
+
+        document.getElementById('urlInput').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') scanUrl();
+        });
+
+</script></body></html>
