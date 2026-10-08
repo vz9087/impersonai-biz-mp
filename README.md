@@ -110,8 +110,6 @@ ImpersonAI combines:
 
 ![Warning Overlay](docs/screenshots/warning-overlay.png)
 
-**PASTE IMAGE HERE:** Take a new screenshot showing the red warning overlay when clicking `paypa1.com` on your `test-click.html` page. If you haven't captured it yet, do so now — it's the most impressive screenshot for your demo.
-
 ---
 
 ### 6. Chrome Extensions Page
