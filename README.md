@@ -78,8 +78,6 @@ ImpersonAI combines:
 
 ![Web Dashboard](docs/screenshots/dashboard.png)
 
-**PASTE IMAGE HERE:** Use the screenshot showing the ImpersonAI dashboard with a scan result (the one where `paypa1.com` shows HIGH RISK 99.9% with "Similar To Brand: paypal.com" and Edit Distance 1).
-
 ---
 
 ### 2. High Risk Detection — Typosquatting Example
@@ -87,8 +85,6 @@ ImpersonAI combines:
 > *Example of the system correctly identifying `paypa1.com` as a HIGH RISK typosquatting attempt against `paypal.com`.*
 
 ![High Risk Detection](docs/screenshots/high-risk.png)
-
-**PASTE IMAGE HERE:** Use the screenshot showing `paypa1.com` (or `g00gle.com`) with the red HIGH RISK card, showing "Similar To Brand: paypal.com", "Edit Distance: 1", and the probability percentage.
 
 ---
 
