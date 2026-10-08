@@ -76,7 +76,7 @@ ImpersonAI combines:
 
 > *The main dashboard where users can enter any domain and get an instant risk assessment with detailed feature breakdown.*
 
-![Web Dashboard]((https://drive.google.com/file/d/1Zonp1uJ0FeNFhEFlO_LsFJceJDx1YR4E/view?usp=sharing))
+![Web Dashboard](docs/screenshots/dashboard.png)
 
 **PASTE IMAGE HERE:** Use the screenshot showing the ImpersonAI dashboard with a scan result (the one where `paypa1.com` shows HIGH RISK 99.9% with "Similar To Brand: paypal.com" and Edit Distance 1).
 
